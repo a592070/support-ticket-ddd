@@ -6,15 +6,16 @@ import com.example.supportticketddd.entity.supportTicket.SupportTicketRecord
 import com.example.supportticketddd.repository.member.MemberRepository
 import com.example.supportticketddd.repository.supportTicket.SupportTicketRepository
 import com.example.supportticketddd.usecase.RepositoryEntityNotFoundException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+
+import javax.annotation.Resource
 
 @Service
 class ReplySupportTicketCommand {
-    @Autowired
+    @Resource(name = "supportTicketJpaRepository")
     SupportTicketRepository supportTicketRepository
 
-    @Autowired
+    @Resource(name = "memberJpaRepository")
     MemberRepository memberRepository
 
     Long exec(ReplySupportTicketDto replySupportTicketDto){

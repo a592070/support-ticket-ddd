@@ -1,13 +1,12 @@
-package com.example.supportticketddd.repository.supportTicket
+package com.example.supportticketddd.repository.supportTicket.jpa
 
-import com.example.supportticketddd.repository.member.MemberData
+import com.example.supportticketddd.repository.member.jpa.MemberData
+import com.example.supportticketddd.repository.supportTicket.jpa.SupportTicketData
 import groovy.transform.ToString
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
-import javax.annotation.Generated
-import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.GeneratedValue

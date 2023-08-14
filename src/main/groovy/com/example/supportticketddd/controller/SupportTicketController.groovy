@@ -6,7 +6,6 @@ import com.example.supportticketddd.usecase.query.ViewSupportTicketDto
 import com.example.supportticketddd.usecase.query.ViewSupportTicketQuery
 import com.example.supportticketddd.usecase.replySupportTicket.ReplySupportTicketCommand
 import com.example.supportticketddd.usecase.replySupportTicket.ReplySupportTicketDto
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -18,7 +17,7 @@ import javax.annotation.Resource
 @RestController("/ticket")
 class SupportTicketController {
 
-    @Autowired
+    @Resource
     OpenSupportTicketCommand openSupportTicketCommand
 
     @Resource

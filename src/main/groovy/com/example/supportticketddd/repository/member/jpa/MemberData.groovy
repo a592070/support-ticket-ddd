@@ -1,4 +1,4 @@
-package com.example.supportticketddd.repository.member
+package com.example.supportticketddd.repository.member.jpa
 
 import groovy.transform.ToString
 import org.springframework.data.annotation.CreatedDate

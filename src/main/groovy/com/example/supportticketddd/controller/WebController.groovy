@@ -1,15 +1,16 @@
 package com.example.supportticketddd.controller
 
-import com.example.supportticketddd.repository.member.MemberData
-import com.example.supportticketddd.repository.member.MemberRepositoryPeer
-import org.springframework.beans.factory.annotation.Autowired
+import com.example.supportticketddd.repository.member.jpa.MemberData
+import com.example.supportticketddd.repository.member.jpa.MemberRepositoryPeer
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+
+import javax.annotation.Resource
 
 @RestController("/web")
 class WebController {
 
-    @Autowired
+    @Resource
     MemberRepositoryPeer memberRepositoryPeer
 
     @RequestMapping("/initialData")

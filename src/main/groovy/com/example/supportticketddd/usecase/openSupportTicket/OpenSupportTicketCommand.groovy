@@ -11,18 +11,18 @@ import com.example.supportticketddd.entity.supportTicket.TimeLimit
 import com.example.supportticketddd.repository.member.MemberRepository
 import com.example.supportticketddd.repository.supportTicket.SupportTicketRepository
 import com.example.supportticketddd.usecase.RepositoryEntityNotFoundException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import javax.annotation.Resource
 import java.time.LocalDateTime
 
 @Service
 class OpenSupportTicketCommand {
 
-    @Autowired
+    @Resource(name = "memberJpaRepository")
     MemberRepository memberRepository
 
-    @Autowired
+    @Resource(name = "supportTicketJpaRepository")
     SupportTicketRepository supportTicketRepository
 
     Long exec(OpenSupportTicketDto openSupportTicketDto){

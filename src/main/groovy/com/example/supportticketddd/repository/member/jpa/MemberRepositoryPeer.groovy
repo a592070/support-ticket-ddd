@@ -1,4 +1,4 @@
-package com.example.supportticketddd.repository.member
+package com.example.supportticketddd.repository.member.jpa
 
 
 import org.springframework.data.jpa.repository.JpaRepository

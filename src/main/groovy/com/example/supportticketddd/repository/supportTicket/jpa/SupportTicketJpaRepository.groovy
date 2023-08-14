@@ -1,23 +1,24 @@
-package com.example.supportticketddd.repository.supportTicket
+package com.example.supportticketddd.repository.supportTicket.jpa
 
 import com.example.supportticketddd.entity.supportTicket.Level
 import com.example.supportticketddd.entity.supportTicket.Status
 import com.example.supportticketddd.entity.supportTicket.SupportTicket
 import com.example.supportticketddd.entity.supportTicket.SupportTicketRecord
 import com.example.supportticketddd.entity.supportTicket.TimeLimit
-import com.example.supportticketddd.repository.member.MemberRepositoryPeer
-import org.springframework.beans.factory.annotation.Autowired
+import com.example.supportticketddd.repository.member.jpa.MemberRepositoryPeer
+import com.example.supportticketddd.repository.supportTicket.SupportTicketRepository
 import org.springframework.stereotype.Repository
 
+import javax.annotation.Resource
 import javax.transaction.Transactional
 
 @Repository
 @Transactional
-class SupportTicketRepositoryImpl implements SupportTicketRepository{
-    @Autowired
+class SupportTicketJpaRepository implements SupportTicketRepository{
+    @Resource
     SupportTicketRepositoryPeer supportTicketRepositoryPeer
 
-    @Autowired
+    @Resource
     MemberRepositoryPeer memberRepositoryPeer
 
     @Override

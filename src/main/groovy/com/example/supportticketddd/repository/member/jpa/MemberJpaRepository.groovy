@@ -1,19 +1,17 @@
-package com.example.supportticketddd.repository.member
+package com.example.supportticketddd.repository.member.jpa
 
 
-import com.example.supportticketddd.entity.member.CustomerServiceOperator
 import com.example.supportticketddd.entity.member.Member
 import com.example.supportticketddd.entity.member.Role
-import org.springframework.beans.factory.annotation.Autowired
+import com.example.supportticketddd.repository.member.MemberRepository
 import org.springframework.stereotype.Repository
 
-import java.time.LocalDateTime
-import java.time.ZoneId
+import javax.annotation.Resource
 
 @Repository
-class MemberRepositoryImpl implements MemberRepository{
+class MemberJpaRepository implements MemberRepository{
 
-    @Autowired
+    @Resource
     MemberRepositoryPeer memberRepositoryPeer
 
     @Override

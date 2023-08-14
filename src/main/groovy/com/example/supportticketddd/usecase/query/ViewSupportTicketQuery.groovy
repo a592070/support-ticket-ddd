@@ -1,7 +1,7 @@
 package com.example.supportticketddd.usecase.query
 
 import com.example.supportticketddd.entity.supportTicket.SupportTicket
-import com.example.supportticketddd.repository.supportTicket.SupportTicketRepositoryPeer
+import com.example.supportticketddd.repository.supportTicket.jpa.SupportTicketRepositoryPeer
 import com.example.supportticketddd.usecase.RepositoryEntityNotFoundException
 import org.springframework.stereotype.Service
 
