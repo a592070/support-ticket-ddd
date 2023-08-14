@@ -7,6 +7,18 @@ class RepositoryEntityNotFoundException extends EntityNotFoundException{
     private final Class entity;
     private final Object identifier;
 
+
+    RepositoryEntityNotFoundException(Class entity) {
+        super(
+                String.format(
+                        Locale.ROOT,
+                        "Entity `%s` does not exist",
+                        entity,
+                )
+        );
+        this.entity = entity;
+    }
+
     RepositoryEntityNotFoundException(Class entity, Object identifier) {
         super(
                 String.format(
@@ -19,5 +31,4 @@ class RepositoryEntityNotFoundException extends EntityNotFoundException{
         this.entity = entity;
         this.identifier = identifier;
     }
-
 }

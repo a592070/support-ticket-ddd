@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository
 
 interface MemberRepository extends AbstractRepository<Member, Long> {
     List<Member> findAllByRole(Role role)
-    Member pickupRandom(Role role)
+    Optional<Member> pickupRandom(Role role)
 
 }

@@ -48,10 +48,9 @@ class MemberRepositoryImpl implements MemberRepository{
     }
 
     @Override
-    Member pickupRandom(Role role) {
+    Optional<Member> pickupRandom(Role role) {
         def members = findAllByRole(role)
-        return members.first()
-//        return members.get(new Random().nextInt(members.size())) as CustomerServiceOperator
+        return members.stream().findAny()
     }
 
 

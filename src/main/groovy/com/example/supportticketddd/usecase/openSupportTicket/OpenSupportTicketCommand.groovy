@@ -1,6 +1,7 @@
 package com.example.supportticketddd.usecase.openSupportTicket
 
 import com.example.supportticketddd.entity.member.Customer
+import com.example.supportticketddd.entity.member.CustomerServiceOperator
 import com.example.supportticketddd.entity.member.Role
 import com.example.supportticketddd.entity.supportTicket.Level
 import com.example.supportticketddd.entity.supportTicket.Status
@@ -29,7 +30,11 @@ class OpenSupportTicketCommand {
                 .orElseThrow {
                     new RepositoryEntityNotFoundException(Customer, openSupportTicketDto.customerId)
                 }
-        def customerServiceOperator = memberRepository.pickupRandom(Role.CUSTOMER_SERVICE_OPERATOR)
+        def customerServiceOperator = memberRepository
+                .pickupRandom(Role.CUSTOMER_SERVICE_OPERATOR)
+                .orElseThrow {
+                    new RepositoryEntityNotFoundException(CustomerServiceOperator)
+                }
 
 
         def level = Level.valueOf(openSupportTicketDto.level)
