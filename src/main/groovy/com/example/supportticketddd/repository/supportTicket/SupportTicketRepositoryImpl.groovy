@@ -5,7 +5,6 @@ import com.example.supportticketddd.entity.supportTicket.Status
 import com.example.supportticketddd.entity.supportTicket.SupportTicket
 import com.example.supportticketddd.entity.supportTicket.SupportTicketRecord
 import com.example.supportticketddd.entity.supportTicket.TimeLimit
-import com.example.supportticketddd.repository.member.MemberData
 import com.example.supportticketddd.repository.member.MemberRepositoryPeer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
@@ -54,10 +53,10 @@ class SupportTicketRepositoryImpl implements SupportTicketRepository{
         supportTicketData.customer = customer
         supportTicketData.currentCustomerServiceOperator = operator
         supportTicketData.supportTicketRecordDataList = supportTicket.supportTicketRecordList.collect {supportTicketRecord ->
-            def member = memberRepositoryPeer.getReferenceById(supportTicketRecord.createdByMemberId)
+            def member = memberRepositoryPeer.getReferenceById(supportTicketRecord.posterId)
             new SupportTicketRecordData(
                     content: supportTicketRecord.content,
-                    createdByMember: member,
+                    poster: member,
                     supportTicketData: supportTicketData
             )
         }
@@ -88,7 +87,7 @@ class SupportTicketRepositoryImpl implements SupportTicketRepository{
                     lastModifiedDate: supportTicketRecordData.lastModifiedDate,
                     content: supportTicketRecordData.content,
                     supportTicket: supportTicket,
-                    createdByMemberId: supportTicketRecordData.createdByMember.id
+                    posterId: supportTicketRecordData.poster.id
             )
         }
 
@@ -109,12 +108,12 @@ class SupportTicketRepositoryImpl implements SupportTicketRepository{
                 currentCustomerServiceOperator: operator
         )
         supportTicketData.supportTicketRecordDataList = supportTicket.supportTicketRecordList.collect {supportTicketRecord ->
-            def member = memberRepositoryPeer.getReferenceById(supportTicketRecord.createdByMemberId)
+            def member = memberRepositoryPeer.getReferenceById(supportTicketRecord.posterId)
 
             new SupportTicketRecordData(
                     id: supportTicketRecord.id,
                     content: supportTicketRecord.content,
-                    createdByMember: member,
+                    poster: member,
                     supportTicketData: supportTicketData
             )
         }

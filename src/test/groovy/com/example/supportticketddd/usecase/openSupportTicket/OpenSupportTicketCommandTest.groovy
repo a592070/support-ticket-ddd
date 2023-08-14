@@ -4,8 +4,7 @@ import com.example.supportticketddd.entity.member.Member
 import com.example.supportticketddd.entity.member.Role
 import com.example.supportticketddd.repository.member.MemberRepository
 import com.example.supportticketddd.repository.supportTicket.SupportTicketRepository
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import com.example.supportticketddd.usecase.RepositoryEntityNotFoundException
 import spock.lang.Specification
 
 class OpenSupportTicketCommandTest extends Specification {

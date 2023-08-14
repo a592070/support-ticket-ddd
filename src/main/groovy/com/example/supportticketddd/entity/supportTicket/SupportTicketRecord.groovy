@@ -11,5 +11,5 @@ class SupportTicketRecord {
     SupportTicket supportTicket
     String content
 
-    Long createdByMemberId
+    Long posterId
 }

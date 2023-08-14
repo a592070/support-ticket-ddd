@@ -10,6 +10,7 @@ import com.example.supportticketddd.entity.supportTicket.SupportTicketRecord
 import com.example.supportticketddd.entity.supportTicket.TimeLimit
 import com.example.supportticketddd.repository.member.MemberRepository
 import com.example.supportticketddd.repository.supportTicket.SupportTicketRepository
+import com.example.supportticketddd.usecase.RepositoryEntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -53,7 +54,7 @@ class OpenSupportTicketCommand {
                 createDate: LocalDateTime.now(),
                 lastModifiedDate: LocalDateTime.now(),
                 content: openSupportTicketDto.content,
-                createdByMemberId: openSupportTicketDto.customerId,
+                posterId: openSupportTicketDto.customerId,
         ))
 
         supportTicketRepository.save(supportTicket)

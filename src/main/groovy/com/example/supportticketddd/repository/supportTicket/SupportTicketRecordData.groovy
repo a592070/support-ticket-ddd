@@ -40,6 +40,6 @@ class SupportTicketRecordData {
     SupportTicketData supportTicketData
 
     @OneToOne
-    MemberData createdByMember
+    MemberData poster
 
 }

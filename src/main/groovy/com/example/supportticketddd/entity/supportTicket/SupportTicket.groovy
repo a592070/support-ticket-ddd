@@ -22,4 +22,10 @@ class SupportTicket extends AggregateRoot{
 
     List<SupportTicketRecord> supportTicketRecordList = new ArrayList<SupportTicketRecord>()
 
+
+    void addSupportTicketRecord(SupportTicketRecord supportTicketRecord){
+        supportTicketRecord.supportTicket = this
+        supportTicketRecordList.add(supportTicketRecord)
+    }
+
 }
