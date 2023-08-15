@@ -9,25 +9,12 @@ class RepositoryEntityNotFoundException extends EntityNotFoundException{
 
 
     RepositoryEntityNotFoundException(Class entity) {
-        super(
-                String.format(
-                        Locale.ROOT,
-                        "Entity `%s` does not exist",
-                        entity,
-                )
-        );
+        super("Entity ${entity} does not exist");
         this.entity = entity;
     }
 
     RepositoryEntityNotFoundException(Class entity, Object identifier) {
-        super(
-                String.format(
-                        Locale.ROOT,
-                        "Entity `%s` with identifier value `%s` does not exist",
-                        entity,
-                        identifier
-                )
-        );
+        super("Entity ${entity} with identifier value ${identifier} does not exist");
         this.entity = entity;
         this.identifier = identifier;
     }

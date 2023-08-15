@@ -13,14 +13,42 @@
 - 上報的工單不能自動關閉，也不能被客服人員關閉，只能由客戶或客服經理關閉
 
 
+
+### Entities
+- Member
+  - id
+  - name
+  - role
+    - 客戶 Customer
+    - 客服 CustomerServiceOperator
+    - 客服經理 CustomerServiceManager
+
+- SupportTicket
+  - id
+  - level
+    - LOW 
+    - MEDIUM 
+    - HIGH 
+    - EMERGENCY
+  - timeLimit
+  - title
+  - status
+    - OPEN
+    - REPORTED
+    - CLOSED
+  - customerId
+  - assignedOperatorId
+  - supportTicketRecordList
+    - id
+    - content
+    - posterId
+
+
 ### UseCase
 
 客戶 UseCase
 - [x] 開啟工單
-  - 客戶需要在工單上描述問題，填寫title與內容，並給出優先級
-  - 隨機選擇客服人員分配工單
-  - 建立工單
-- [ ] 回覆工單
+- [x] 回覆工單
 - [ ] 上報公單
 - [ ] 關閉
 - [ ] 關閉上報公單
@@ -39,3 +67,26 @@
 - [ ] 關閉公單
 - [ ] 關閉上報公單
 - [ ] 分配上報工單
+
+#### SupportTicket UseCase
+
+- [x] 開啟工單
+- 客戶需要在工單上描述問題，填寫title與內容，並給選擇優先級
+- 由優先級決定處理時限
+- 隨機選擇客服人員分配工單
+- 建立工單 SupportTicket
+- 建立工單紀錄 SupportTicketRecord ，並將客戶問題的內容紀錄在上面
+
+
+- [x] 回覆工單
+- 客戶/客服/經理 都可以回覆
+  - 客戶需要檢查是否為自己的工單
+  - 客服只能回覆被指派的工單
+- 須檢查工單狀態 = OPEN | REPORTED
+- 建立工單紀錄 SupportTicketRecord ，並將回覆內容與回覆者紀錄在上面
+
+
+- [ ] 查看工單
+- 客戶/客服/經理 都可以查看
+  - 客戶需要檢查是否為自己的工單
+
