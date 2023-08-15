@@ -42,8 +42,9 @@ class OpenSupportTicketCommandTest extends Specification {
         def result = command.exec(ticketDto)
 
         then:
-        result != null
-
+        with(command.supportTicketRepository){
+            1 * save(_)
+        }
     }
 
     def "Happy Path With In Memory Repository"() {
