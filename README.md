@@ -86,7 +86,6 @@
 - 建立工單紀錄 SupportTicketRecord ，並將回覆內容與回覆者紀錄在上面
 
 
-- [ ] 查看工單
-- 客戶/客服/經理 都可以查看
-  - 客戶需要檢查是否為自己的工單
+- [x] 查看工單
+- temporally permit for all
 
