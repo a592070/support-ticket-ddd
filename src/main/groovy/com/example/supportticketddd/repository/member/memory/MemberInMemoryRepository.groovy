@@ -7,40 +7,39 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class MemberInMemoryRepository implements MemberRepository{
-    List<Member> memberList = new ArrayList<>()
+    Map<Long, Member> memberMap = new HashMap<>()
 
     @Override
     List<Member> findAll() {
-        return memberList
+        return memberMap.values()
     }
 
     @Override
     Optional<Member> findById(Long id) {
-        return Optional.ofNullable(memberList.find {it.id == id})
+        return Optional.ofNullable(memberMap.get(id))
     }
 
     @Override
     Long save(Member member) {
-        if (findById(member.id).isPresent()) {
-            memberList.set(member.id as int, member)
-        }else{
-            memberList.add(member)
+        if (member.id == null) {
+            member.id = memberMap.keySet().stream().max {it}.map {it+1}.orElse(1)
         }
-        return memberList.indexOf(member)
+        memberMap.put(member.id, member)
+        return member.id
     }
 
     @Override
     void deleteById(Long id) {
-        findById(id).ifPresent {memberList.remove(id) }
+        findById(id).ifPresent {memberMap.remove(id) }
     }
 
     @Override
     List<Member> findAllByRole(Role role) {
-        return memberList.findAll {it.role == role}
+        return memberMap.values().findAll {it.role == role}
     }
 
     @Override
     Optional<Member> pickupRandom(Role role) {
-        return memberList.stream().findAny()
+        return memberMap.values().stream().findAny()
     }
 }

@@ -6,30 +6,29 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class SupportTicketInMemoryRepository implements SupportTicketRepository{
-    List<SupportTicket> supportTicketList = new ArrayList<>()
+    Map<Long, SupportTicket> supportTicketMap = new HashMap<>()
 
     @Override
     List<SupportTicket> findAll() {
-        return supportTicketList
+        return supportTicketMap.values()
     }
 
     @Override
     Optional<SupportTicket> findById(Long id) {
-        return Optional.ofNullable(supportTicketList.find {it.id == id })
+        return Optional.ofNullable(supportTicketMap.get(id))
     }
 
     @Override
     Long save(SupportTicket supportTicket) {
-        if (findById(supportTicket.id).isPresent()) {
-            supportTicketList.set(supportTicket.id as int, supportTicket)
-        }else{
-            supportTicketList.add(supportTicket)
+        if (supportTicket.id == null) {
+            supportTicket.id = supportTicketMap.keySet().stream().max {it}.map {it+1}.orElse(1)
         }
-        return supportTicketList.indexOf(supportTicket)
+        supportTicketMap.put(supportTicket.id, supportTicket)
+        return supportTicket.id
     }
 
     @Override
     void deleteById(Long id) {
-        supportTicketList.remove(id)
+        supportTicketMap.remove(id)
     }
 }

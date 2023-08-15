@@ -42,7 +42,7 @@ class SupportTicketData {
     MemberData customer
 
     @OneToOne
-    MemberData currentCustomerServiceOperator
+    MemberData assignedOperator
 
     @OneToMany(cascade = CascadeType.ALL)
     List<SupportTicketRecordData> supportTicketRecordDataList

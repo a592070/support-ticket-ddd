@@ -16,7 +16,7 @@ class ViewSupportTicketDto {
 
     List<SupportTicketRecord> supportTicketRecordList
     Member customer
-    Member currentCustomerServiceOperator
+    Member assignedOperator
 }
 class SupportTicketRecord{
     long id

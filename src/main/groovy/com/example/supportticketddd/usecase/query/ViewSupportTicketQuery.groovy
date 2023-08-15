@@ -35,10 +35,10 @@ class ViewSupportTicketQuery {
                         name: supportTicketData.customer.name,
                         role: supportTicketData.customer.role
                 ),
-                currentCustomerServiceOperator: new Member(
-                        id: supportTicketData.currentCustomerServiceOperator.id,
-                        name: supportTicketData.currentCustomerServiceOperator.name,
-                        role: supportTicketData.currentCustomerServiceOperator.role
+                assignedOperator: new Member(
+                        id: supportTicketData.assignedOperator.id,
+                        name: supportTicketData.assignedOperator.name,
+                        role: supportTicketData.assignedOperator.role
                 ),
                 supportTicketRecordList: supportTicketData.supportTicketRecordDataList.collect {
                     new SupportTicketRecord(

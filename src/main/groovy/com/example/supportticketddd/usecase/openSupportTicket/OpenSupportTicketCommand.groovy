@@ -47,7 +47,7 @@ class OpenSupportTicketCommand {
                 title: openSupportTicketDto.title,
                 status: Status.OPEN,
                 customerId: customer.id,
-                currentCustomerServiceOperatorId: customerServiceOperator.id
+                assignedOperatorId: customerServiceOperator.id
         )
         supportTicket.supportTicketRecordList.add(new SupportTicketRecord(
                 supportTicket: supportTicket,

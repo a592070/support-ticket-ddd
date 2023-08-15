@@ -49,10 +49,10 @@ class SupportTicketJpaRepository implements SupportTicketRepository{
             supportTicketData = supportTicketRepositoryPeer.getReferenceById(supportTicket.id)
         }
         def customer = memberRepositoryPeer.getReferenceById(supportTicket.customerId)
-        def operator = memberRepositoryPeer.getReferenceById(supportTicket.currentCustomerServiceOperatorId)
+        def operator = memberRepositoryPeer.getReferenceById(supportTicket.assignedOperatorId)
 
         supportTicketData.customer = customer
-        supportTicketData.currentCustomerServiceOperator = operator
+        supportTicketData.assignedOperator = operator
         supportTicketData.supportTicketRecordDataList = supportTicket.supportTicketRecordList.collect {supportTicketRecord ->
             def member = memberRepositoryPeer.getReferenceById(supportTicketRecord.posterId)
             new SupportTicketRecordData(
@@ -78,7 +78,7 @@ class SupportTicketJpaRepository implements SupportTicketRepository{
                 timeLimit: TimeLimit.valueOf(supportTicketData.timeLimit),
                 title: supportTicketData.title,
                 customerId: supportTicketData.customer.id,
-                currentCustomerServiceOperatorId: supportTicketData.currentCustomerServiceOperator.id,
+                assignedOperatorId: supportTicketData.assignedOperator.id,
                 status: Status.valueOf(supportTicketData.status)
         )
         supportTicket.supportTicketRecordList = supportTicketData.supportTicketRecordDataList.collect {supportTicketRecordData ->
@@ -97,7 +97,7 @@ class SupportTicketJpaRepository implements SupportTicketRepository{
 
     SupportTicketData convert(SupportTicket supportTicket){
         def customer = memberRepositoryPeer.getReferenceById(supportTicket.customerId)
-        def operator = memberRepositoryPeer.getReferenceById(supportTicket.currentCustomerServiceOperatorId)
+        def operator = memberRepositoryPeer.getReferenceById(supportTicket.assignedOperatorId)
 
         def supportTicketData = new SupportTicketData(
                 id: supportTicket.id,
@@ -106,7 +106,7 @@ class SupportTicketJpaRepository implements SupportTicketRepository{
                 title: supportTicket.title,
                 status: supportTicket.status.toString(),
                 customer: customer,
-                currentCustomerServiceOperator: operator
+                assignedOperator: operator
         )
         supportTicketData.supportTicketRecordDataList = supportTicket.supportTicketRecordList.collect {supportTicketRecord ->
             def member = memberRepositoryPeer.getReferenceById(supportTicketRecord.posterId)
