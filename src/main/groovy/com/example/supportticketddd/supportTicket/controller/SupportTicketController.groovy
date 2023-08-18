@@ -1,11 +1,9 @@
 package com.example.supportticketddd.supportTicket.controller
 
-import com.example.supportticketddd.supportTicket.usecase.openSupportTicket.OpenSupportTicketCommand
-import com.example.supportticketddd.supportTicket.usecase.openSupportTicket.OpenSupportTicketDto
+import com.example.supportticketddd.supportTicket.usecase.openSupportTicket.OpenSupportTicketCommandHandler
 import com.example.supportticketddd.supportTicket.usecase.query.ViewSupportTicketDto
 import com.example.supportticketddd.supportTicket.usecase.query.ViewSupportTicketQuery
-import com.example.supportticketddd.supportTicket.usecase.replySupportTicket.ReplySupportTicketCommand
-import com.example.supportticketddd.supportTicket.usecase.replySupportTicket.ReplySupportTicketDto
+import com.example.supportticketddd.supportTicket.usecase.replySupportTicket.ReplySupportTicketCommandHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -18,27 +16,27 @@ import javax.annotation.Resource
 class SupportTicketController {
 
     @Resource
-    OpenSupportTicketCommand openSupportTicketCommand
+    OpenSupportTicketCommandHandler openSupportTicketCommandHandler
 
     @Resource
     ViewSupportTicketQuery viewSupportTicketQuery
 
     @Resource
-    ReplySupportTicketCommand replySupportTicketCommand
+    ReplySupportTicketCommandHandler replySupportTicketCommandHandler
 
     @PostMapping("/open")
     Long open(@RequestBody OpenSupportTicketDto openSupportTicketDto){
-        openSupportTicketCommand.exec(openSupportTicketDto)
+        openSupportTicketCommandHandler.execute(openSupportTicketDto.toCommand()).id
     }
 
     @PostMapping("/reply")
     Long reply(@RequestBody ReplySupportTicketDto replySupportTicketDto){
-        replySupportTicketCommand.exec(replySupportTicketDto)
+        replySupportTicketCommandHandler.execute(replySupportTicketDto.toCommand()).id
     }
 
     @GetMapping("/{id}")
     ViewSupportTicketDto view(@PathVariable long id){
-        return viewSupportTicketQuery.exec(id)
+        return viewSupportTicketQuery.execute(id)
     }
 
 }

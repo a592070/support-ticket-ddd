@@ -15,7 +15,7 @@ class ViewSupportTicketQuery {
     SupportTicketRepositoryPeer supportTicketRepositoryPeer
 
 
-    ViewSupportTicketDto exec(long id){
+    ViewSupportTicketDto execute(long id){
         def supportTicketData = supportTicketRepositoryPeer
                 .findById(id)
                 .orElseThrow {

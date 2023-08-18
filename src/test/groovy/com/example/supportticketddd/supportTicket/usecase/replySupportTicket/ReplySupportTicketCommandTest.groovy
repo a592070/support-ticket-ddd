@@ -2,6 +2,7 @@ package com.example.supportticketddd.supportTicket.usecase.replySupportTicket
 
 import com.example.supportticketddd.member.entity.Member
 import com.example.supportticketddd.member.entity.Role
+import com.example.supportticketddd.supportTicket.controller.ReplySupportTicketDto
 import com.example.supportticketddd.supportTicket.entity.Level
 import com.example.supportticketddd.supportTicket.entity.Status
 import com.example.supportticketddd.supportTicket.entity.SupportTicket
@@ -16,7 +17,7 @@ import com.example.supportticketddd.supportTicket.usecase.ForbiddenStatusExcepti
 import spock.lang.Specification
 
 class ReplySupportTicketCommandTest extends Specification {
-    ReplySupportTicketCommand command = new ReplySupportTicketCommand()
+    ReplySupportTicketCommandHandler commandHandler = new ReplySupportTicketCommandHandler()
     SupportTicketRepository supportTicketRepository
     MemberRepository memberRepository
 
@@ -28,7 +29,7 @@ class ReplySupportTicketCommandTest extends Specification {
 
     def "Happy Path"() {
         setup:
-        def replySupportTicketDto = new ReplySupportTicketDto(
+        def command = new ReplySupportTicketCommand(
                 supportTicketId: 1,
                 content: "reply...",
                 poster: 1
@@ -57,20 +58,20 @@ class ReplySupportTicketCommandTest extends Specification {
         ]
 
 
-        command.memberRepository = Mock(MemberRepository){
+        this.commandHandler.memberRepository = Mock(MemberRepository){
             findById(1) >> Optional.of(mockClient)
         }
-        command.supportTicketRepository = Mock(SupportTicketRepository){
+        this.commandHandler.supportTicketRepository = Mock(SupportTicketRepository){
             findById(1) >> Optional.of(mockSupportTicket)
             save(_) >> 1
         }
 
 
         when:
-        command.exec(replySupportTicketDto)
+        this.commandHandler.execute(command)
 
         then:
-        with(command.supportTicketRepository){
+        with(this.commandHandler.supportTicketRepository){
             1 * save(_)
         }
 
@@ -80,7 +81,7 @@ class ReplySupportTicketCommandTest extends Specification {
         memberRepository = new MemberInMemoryRepository()
         supportTicketRepository = new SupportTicketInMemoryRepository()
 
-        def replySupportTicketDto = new ReplySupportTicketDto(
+        def command = new ReplySupportTicketCommand(
                 supportTicketId: 1,
                 content: "reply...",
                 poster: 1
@@ -115,15 +116,15 @@ class ReplySupportTicketCommandTest extends Specification {
         memberRepository.save(mockClient)
         memberRepository.save(mockOperator)
         supportTicketRepository.save(mockSupportTicket)
-        command.memberRepository = memberRepository
-        command.supportTicketRepository = supportTicketRepository
+        commandHandler.memberRepository = memberRepository
+        commandHandler.supportTicketRepository = supportTicketRepository
 
 
         when:
-        def result = command.exec(replySupportTicketDto)
+        def result = commandHandler.execute(command)
 
         then:
-        result != null && result > 0
+        result != null && result.id > 0
 
     }
 
@@ -188,17 +189,17 @@ class ReplySupportTicketCommandTest extends Specification {
         memberRepository.save(mockOperator)
         supportTicketRepository.save(mockSupportTicketFromClientA)
         supportTicketRepository.save(mockSupportTicketFromClientB)
-        command.memberRepository = memberRepository
-        command.supportTicketRepository = supportTicketRepository
+        commandHandler.memberRepository = memberRepository
+        commandHandler.supportTicketRepository = supportTicketRepository
 
-        def replySupportTicketDto = new ReplySupportTicketDto(
+        def command = new ReplySupportTicketCommand(
                 supportTicketId: mockSupportTicketFromClientA.id,
                 content: "reply...",
                 poster: mockClientB.id
         )
 
         when:
-        def result = command.exec(replySupportTicketDto)
+        def result = commandHandler.execute(command)
 
         then:
         def e = thrown(ForbiddenMemberException)
@@ -248,17 +249,17 @@ class ReplySupportTicketCommandTest extends Specification {
         memberRepository.save(mockOperatorA)
         memberRepository.save(mockOperatorB)
         supportTicketRepository.save(mockSupportTicket)
-        command.memberRepository = memberRepository
-        command.supportTicketRepository = supportTicketRepository
+        commandHandler.memberRepository = memberRepository
+        commandHandler.supportTicketRepository = supportTicketRepository
 
-        def replySupportTicketDto = new ReplySupportTicketDto(
+        def command = new ReplySupportTicketCommand(
                 supportTicketId: mockSupportTicket.id,
                 content: "reply...",
                 poster: mockOperatorB.id
         )
 
         when:
-        def result = command.exec(replySupportTicketDto)
+        def result = commandHandler.execute(command)
 
         then:
         def e = thrown(ForbiddenMemberException)
@@ -301,17 +302,17 @@ class ReplySupportTicketCommandTest extends Specification {
         memberRepository.save(mockClient)
         memberRepository.save(mockOperator)
         supportTicketRepository.save(mockSupportTicket)
-        command.memberRepository = memberRepository
-        command.supportTicketRepository = supportTicketRepository
+        commandHandler.memberRepository = memberRepository
+        commandHandler.supportTicketRepository = supportTicketRepository
 
-        def replySupportTicketDto = new ReplySupportTicketDto(
+        def command = new ReplySupportTicketCommand(
                 supportTicketId: 1,
                 content: "reply...",
                 poster: 1
         )
 
         when:
-        command.exec(replySupportTicketDto)
+        commandHandler.execute(command)
 
         then:
         thrown(ForbiddenStatusException)
@@ -353,17 +354,17 @@ class ReplySupportTicketCommandTest extends Specification {
         memberRepository.save(mockClient)
         memberRepository.save(mockOperator)
         supportTicketRepository.save(mockSupportTicket)
-        command.memberRepository = memberRepository
-        command.supportTicketRepository = supportTicketRepository
+        commandHandler.memberRepository = memberRepository
+        commandHandler.supportTicketRepository = supportTicketRepository
 
-        def replySupportTicketDto = new ReplySupportTicketDto(
+        def command = new ReplySupportTicketCommand(
                 supportTicketId: 1,
                 content: "reply...",
                 poster: 1
         )
 
         when:
-        command.exec(replySupportTicketDto)
+        commandHandler.execute(command)
 
         then:
         notThrown(ForbiddenStatusException)

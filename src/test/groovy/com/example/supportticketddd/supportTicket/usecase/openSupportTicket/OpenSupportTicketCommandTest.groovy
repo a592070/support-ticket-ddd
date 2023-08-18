@@ -10,19 +10,19 @@ import com.example.supportticketddd.supportTicket.usecase.RepositoryEntityNotFou
 import spock.lang.Specification
 
 class OpenSupportTicketCommandTest extends Specification {
-    def command = new OpenSupportTicketCommand()
+    def commandHandler = new OpenSupportTicketCommandHandler()
     SupportTicketRepository supportTicketRepository
     MemberRepository memberRepository
 
     def "Happy Path"() {
         setup:
-        def ticketDto = new OpenSupportTicketDto(
+        def command = new OpenSupportTicketCommand(
                 customerId: 1,
                 title: "Test Ticket",
                 content: "something todo...",
                 level: "LOW"
         )
-        command.memberRepository = Mock(MemberRepository){
+        commandHandler.memberRepository = Mock(MemberRepository){
             findById(1) >> Optional.of(new Member(
                     id: 1,
                     name: "client",
@@ -34,15 +34,15 @@ class OpenSupportTicketCommandTest extends Specification {
                     role: Role.CUSTOMER_SERVICE_OPERATOR
             ))
         }
-        command.supportTicketRepository = Mock(SupportTicketRepository){
+        commandHandler.supportTicketRepository = Mock(SupportTicketRepository){
             save(_) >> 1
         }
 
         when:
-        def result = command.exec(ticketDto)
+        def result = commandHandler.execute(command)
 
         then:
-        with(command.supportTicketRepository){
+        with(commandHandler.supportTicketRepository){
             1 * save(_)
         }
     }
@@ -66,10 +66,10 @@ class OpenSupportTicketCommandTest extends Specification {
                         role: Role.CUSTOMER_SERVICE_OPERATOR
                 )
         )
-        command.memberRepository = memberRepository
-        command.supportTicketRepository = supportTicketRepository
+        commandHandler.memberRepository = memberRepository
+        commandHandler.supportTicketRepository = supportTicketRepository
 
-        def ticketDto = new OpenSupportTicketDto(
+        def command = new OpenSupportTicketCommand(
                 customerId: 1,
                 title: "Test Ticket",
                 content: "something todo...",
@@ -77,7 +77,7 @@ class OpenSupportTicketCommandTest extends Specification {
         )
 
         when:
-        def result = command.exec(ticketDto)
+        def result = commandHandler.execute(command)
 
         then:
         result != null
@@ -86,18 +86,18 @@ class OpenSupportTicketCommandTest extends Specification {
 
     def "Customer Not Exist"(){
         setup:
-        def ticketDto = new OpenSupportTicketDto(
+        def command = new OpenSupportTicketCommand(
                 customerId: 1,
                 title: "Test Ticket",
                 content: "something todo...",
                 level: "LOW"
         )
-        command.memberRepository = Mock(MemberRepository){
+        commandHandler.memberRepository = Mock(MemberRepository){
             findById(1) >> Optional.empty()
         }
 
         when:
-        def result = command.exec(ticketDto)
+        def result = commandHandler.execute(command)
 
         then:
         thrown(RepositoryEntityNotFoundException)
@@ -106,13 +106,13 @@ class OpenSupportTicketCommandTest extends Specification {
 
     def "Operator Not Exist"(){
         setup:
-        def ticketDto = new OpenSupportTicketDto(
+        def command = new OpenSupportTicketCommand(
                 customerId: 1,
                 title: "Test Ticket",
                 content: "something todo...",
                 level: "LOW"
         )
-        command.memberRepository = Mock(MemberRepository){
+        commandHandler.memberRepository = Mock(MemberRepository){
             findById(1) >> Optional.of(new Member(
                     id: 1,
                     name: "client",
@@ -122,7 +122,7 @@ class OpenSupportTicketCommandTest extends Specification {
         }
 
         when:
-        def result = command.exec(ticketDto)
+        def result = commandHandler.execute(command)
 
         then:
         thrown(RepositoryEntityNotFoundException)
@@ -130,13 +130,13 @@ class OpenSupportTicketCommandTest extends Specification {
 
     def "Illegal Params: level"(){
         setup:
-        def ticketDto = new OpenSupportTicketDto(
+        def command = new OpenSupportTicketCommand(
                 customerId: 1,
                 title: "Test Ticket",
                 content: "something todo...",
                 level: "Unknown"
         )
-        command.memberRepository = Mock(MemberRepository){
+        commandHandler.memberRepository = Mock(MemberRepository){
             findById(1) >> Optional.of(new Member(
                     id: 1,
                     name: "client",
@@ -148,12 +148,12 @@ class OpenSupportTicketCommandTest extends Specification {
                     role: Role.CUSTOMER_SERVICE_OPERATOR
             ))
         }
-        command.supportTicketRepository = Mock(SupportTicketRepository){
+        commandHandler.supportTicketRepository = Mock(SupportTicketRepository){
             save(_) >> 1
         }
 
         when:
-        def result = command.exec(ticketDto)
+        def result = commandHandler.execute(command)
 
         then:
         thrown(IllegalArgumentException)
