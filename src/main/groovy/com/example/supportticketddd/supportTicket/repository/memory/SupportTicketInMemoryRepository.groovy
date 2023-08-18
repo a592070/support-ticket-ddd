@@ -21,7 +21,7 @@ class SupportTicketInMemoryRepository implements SupportTicketRepository{
     @Override
     Long save(SupportTicket supportTicket) {
         if (supportTicket.id == null) {
-            supportTicket.id = supportTicketMap.keySet().stream().max {it}.map {it+1}.orElse(1)
+            supportTicket.id = supportTicketMap.keySet().stream().mapToLong {it}.max().orElse(0) +1
         }
         supportTicketMap.put(supportTicket.id, supportTicket)
         return supportTicket.id

@@ -30,4 +30,12 @@ class SupportTicket extends AggregateRoot{
         supportTicketRecordList.add(supportTicketRecord)
     }
 
+    SupportTicketRecord getLastRecord(){
+        return supportTicketRecordList.last()
+    }
+
+
+    boolean isClosed() {
+        status == Status.CLOSED
+    }
 }

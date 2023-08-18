@@ -1,4 +1,4 @@
-package com.example.supportticketddd.supportTicket.usecase
+package com.example.supportticketddd.common.exception
 
 class ForbiddenMemberException extends RuntimeException{
     private final Class entity;

@@ -2,7 +2,7 @@ package com.example.supportticketddd.supportTicket.usecase.query
 
 import com.example.supportticketddd.supportTicket.entity.SupportTicket
 import com.example.supportticketddd.supportTicket.repository.jpa.SupportTicketRepositoryPeer
-import com.example.supportticketddd.supportTicket.usecase.RepositoryEntityNotFoundException
+import com.example.supportticketddd.common.exception.RepositoryEntityNotFoundException
 import org.springframework.stereotype.Service
 
 import javax.annotation.Resource

@@ -1,4 +1,4 @@
-package com.example.supportticketddd.supportTicket.usecase
+package com.example.supportticketddd.common.exception
 
 import javax.persistence.EntityNotFoundException
 

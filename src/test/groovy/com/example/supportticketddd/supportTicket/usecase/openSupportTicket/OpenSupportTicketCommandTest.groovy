@@ -1,16 +1,19 @@
 package com.example.supportticketddd.supportTicket.usecase.openSupportTicket
 
+import com.example.supportticketddd.common.DomainEventPublishHandler
 import com.example.supportticketddd.member.entity.Member
 import com.example.supportticketddd.member.entity.Role
 import com.example.supportticketddd.member.repository.MemberRepository
 import com.example.supportticketddd.member.repository.memory.MemberInMemoryRepository
 import com.example.supportticketddd.supportTicket.repository.SupportTicketRepository
 import com.example.supportticketddd.supportTicket.repository.memory.SupportTicketInMemoryRepository
-import com.example.supportticketddd.supportTicket.usecase.RepositoryEntityNotFoundException
+import com.example.supportticketddd.common.exception.RepositoryEntityNotFoundException
 import spock.lang.Specification
 
 class OpenSupportTicketCommandTest extends Specification {
-    def commandHandler = new OpenSupportTicketCommandHandler()
+    def commandHandler = new OpenSupportTicketCommandHandler(
+            domainEventPublishHandler: Mock(DomainEventPublishHandler)
+    )
     SupportTicketRepository supportTicketRepository
     MemberRepository memberRepository
 

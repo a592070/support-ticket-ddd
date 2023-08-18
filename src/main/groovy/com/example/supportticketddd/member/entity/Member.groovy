@@ -16,4 +16,14 @@ class Member extends AggregateRoot{
     LocalDateTime lastModifiedDate
 
     Role role
+
+    boolean isCustomer(){
+        return role == Role.CUSTOMER
+    }
+    boolean isOperator(){
+        return role == Role.CUSTOMER_SERVICE_OPERATOR
+    }
+    boolean isManager(){
+        return role == Role.CUSTOMER_SERVICE_MANAGER
+    }
 }

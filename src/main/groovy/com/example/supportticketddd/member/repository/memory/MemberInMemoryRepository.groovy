@@ -22,7 +22,7 @@ class MemberInMemoryRepository implements MemberRepository{
     @Override
     Long save(Member member) {
         if (member.id == null) {
-            member.id = memberMap.keySet().stream().max {it}.map {it+1}.orElse(1)
+            member.id = memberMap.keySet().stream().mapToLong {it}.max().orElse(0) +1
         }
         memberMap.put(member.id, member)
         return member.id

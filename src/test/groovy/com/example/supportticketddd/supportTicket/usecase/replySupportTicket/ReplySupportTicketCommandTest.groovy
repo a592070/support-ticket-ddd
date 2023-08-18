@@ -1,8 +1,8 @@
 package com.example.supportticketddd.supportTicket.usecase.replySupportTicket
 
+import com.example.supportticketddd.common.DomainEventPublishHandler
 import com.example.supportticketddd.member.entity.Member
 import com.example.supportticketddd.member.entity.Role
-import com.example.supportticketddd.supportTicket.controller.ReplySupportTicketDto
 import com.example.supportticketddd.supportTicket.entity.Level
 import com.example.supportticketddd.supportTicket.entity.Status
 import com.example.supportticketddd.supportTicket.entity.SupportTicket
@@ -12,12 +12,14 @@ import com.example.supportticketddd.member.repository.MemberRepository
 import com.example.supportticketddd.member.repository.memory.MemberInMemoryRepository
 import com.example.supportticketddd.supportTicket.repository.SupportTicketRepository
 import com.example.supportticketddd.supportTicket.repository.memory.SupportTicketInMemoryRepository
-import com.example.supportticketddd.supportTicket.usecase.ForbiddenMemberException
-import com.example.supportticketddd.supportTicket.usecase.ForbiddenStatusException
+import com.example.supportticketddd.common.exception.ForbiddenMemberException
+import com.example.supportticketddd.common.exception.ForbiddenStatusException
 import spock.lang.Specification
 
 class ReplySupportTicketCommandTest extends Specification {
-    ReplySupportTicketCommandHandler commandHandler = new ReplySupportTicketCommandHandler()
+    ReplySupportTicketCommandHandler commandHandler = new ReplySupportTicketCommandHandler(
+            domainEventPublishHandler: Mock(DomainEventPublishHandler)
+    )
     SupportTicketRepository supportTicketRepository
     MemberRepository memberRepository
 
